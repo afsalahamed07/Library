@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <title>Library</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="h1-main">
+            <h1>LIBRARY</h1>
+        </div>
+
+        <div id="books">
+            <div class="row"></div>
+        </div>
+        <div class="div-addBook">
+            <button id="btn-addBook" class="waves-effect waves-light btn"><i class="material-icons right">add</i>Add Book</button>
+        </div>
+
+        <div class="hidden-div">
+            <div class="form-addBook">
+                <form action="/">
+                    <div class="input-field">
+                        <input id="book-title" type="text" class="validate" required>
+                        <label for="book-title">Book Title</label>
+                    </div>
+                    <div class="input-field">
+                        <input id="book-author" type="text" class="validate" required>
+                        <label for="book-author">Book author</label>
+                    </div>
+                    <div class="input-field">
+                        <input id="book-pages" type="number" class="validate" required>
+                        <label for="book-pages">Pages</label>
+                    </div>
+                    <div id="checkbox-read">
+                        <label>
+                        <input id="book-read" type="checkbox" value="read"/>
+                        <span>Read</span>
+                      </label>
+                    </div>
+
+                    <div id="btn-add" class="center-align">
+                        <button type="submit" class="waves-effect waves-light btn-large">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="script.js "></script>
+</body>
+
+</html>
