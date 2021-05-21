@@ -4,6 +4,10 @@ h1 {
     font-weight: 600;
 }
 
+body {
+    background-color: #f2dac3;
+}
+
 .hidden-div {
     display: none;
     position: fixed;
@@ -62,4 +66,18 @@ h1 {
         height: 50%;
         opacity: 1;
     }
+}
+
+.btn,
+.btn-large,
+.btn-small {
+    background-color: #cc9b6d !important;
+}
+
+.card {
+    background-color: #f1ca89 !important;
+}
+
+.card-action {
+    background-color: #c8c2bc !important;
 }
