@@ -12,3 +12,6 @@ use filter
 ### delete from the dom
 
 use card id
+
+
+not complete
