@@ -12,8 +12,7 @@ body {
     display: none;
     position: fixed;
     z-index: 1;
-    /* Full width */
-    width: 100%;
+    width: 100%; /* Full width */
     /* Full height */
     height: 100%;
     left: 0;
@@ -38,6 +37,7 @@ body {
     animation-timing-function: ease-in;
     animation-duration: 0.4s;
 }
+
 
 .div-addBook {
     position: fixed;

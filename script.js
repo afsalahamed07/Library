@@ -54,7 +54,7 @@ const btnAdd = document.querySelector("#btn-add");
 
 const form = document.querySelector("form");
 const bookTitle = document.querySelector("#book-title");
-const bookAuthour = document.querySelector("#book-author");
+const bookAuthor = document.querySelector("#book-author");
 const bookPages = document.querySelector("#book-pages");
 const bookRead = document.querySelector("#book-read");
 
@@ -70,7 +70,7 @@ window.onclick = function(event) {
     }
 }
 
-// coveting objects from loaclLibarary to Book objects
+// coveting objects from localLibrary to Book objects
 localLibrary.forEach(book => {
     let read = book.read == "Read" ? true : false;
     book = new Book(book.title, book.author, book.pages, read)
@@ -102,7 +102,7 @@ form.addEventListener("submit", (e) => {
 
     let book = new Book(
         bookTitle.value,
-        bookAuthour.value,
+        bookAuthor.value,
         bookPages.value,
         bookRead.checked);
 
