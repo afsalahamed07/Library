@@ -1,133 +1,105 @@
-let sessionLibrary = [];
-let numInstances = 1;
+// grab dom element form
+const form = document.querySelector('form');
+const shelv = document.querySelector('.shelv')
 
-// local storage
-let localLibrary = localStorage.getItem('localLibrary') ? JSON.parse(localStorage.getItem('localLibrary')) : [] // let numInstances = localStorage.getItem('numInstances') ? parseInt(localStorage.getItem('numInstances')) : 1;
-    // let numInstances = localStorage.getItem('numInstances') ? parseInt(localStorage.getItem('numInstances')) : 1;
 
-function Book(title, author, pages, read) {
-    this.bookId = "book" + numInstances;
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read ? "Read" : "Not read";
-
-    numInstances++;
+for (let i=0; i < localStorage.length; i++) {
+    const book = JSON.parse(localStorage.getItem(localStorage.key(i)));
+    shelv.innerHTML += bookCardTemplate(book.title, book.author, book.publish, book.page)
 }
 
-Book.prototype.addBookToLibrary = function() {
-    sessionLibrary.push(this);
-};
+// Book calss
+class Book {
+    constructor(title, author, publish, page, read=false) {
+        this.title = title;
+        this.author = author;
+        this.publish = publish;
+        this.page = page;
+        this.read = read;
+    }
 
+    get bookDetails() {
+        return {
+            "title": this.title,
+            "author": this.author,
+            "publish": this.publish,
+            "page": this.page,
+            "read": this.read
+        }
+    }
 
-Book.prototype.makeCard = function() {
-    return `<div class="col s12 m4" id="${this.bookId}">
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">${this.title}</span>
-        <span class="card-title">${this.author}</span>
-        <span class="card-title">${this.pages}</span>
-        <span class="card-title">${this.read}</span>
-      </div>
-      <div class="card-action">
-        <button class="btn btn-remove" id="btn-${this.bookId}">Remove</button>
-        <button class ="btn">Read</button>
-      </div>
-    </div>
-  </div>`
-};
+    get read() {
+        return this._read;
+    }
 
-
-
-function removeFromLibrary(bookId) {
-    sessionLibrary = sessionLibrary.filter(book => book.bookId != bookId);
-}
-
-
-
-const books = document.querySelector("#books");
-const bookRow = books.querySelector(".row")
-
-const btnAddBook = document.querySelector("#btn-addBook");
-const formAddBook = document.querySelector(".hidden-div");
-const btnAdd = document.querySelector("#btn-add");
-
-const form = document.querySelector("form");
-const bookTitle = document.querySelector("#book-title");
-const bookAuthor = document.querySelector("#book-author");
-const bookPages = document.querySelector("#book-pages");
-const bookRead = document.querySelector("#book-read");
-
-
-btnAddBook.addEventListener("click", () => {
-    formAddBook.style.display = "block";
-});
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == formAddBook) {
-        formAddBook.style.display = "none";
+    set read(bool) {
+        this._read = bool;
     }
 }
 
-// coveting objects from localLibrary to Book objects
-localLibrary.forEach(book => {
-    let read = book.read == "Read" ? true : false;
-    book = new Book(book.title, book.author, book.pages, read)
-    const bookCard = book.makeCard();
-    bookRow.innerHTML += bookCard;
 
-    sessionLibrary.push(book);
-});
-
-let btnRemove = document.querySelectorAll(".btn-remove")
-
-btnRemove.forEach(btn => {
-    btn.addEventListener("click", function() {
-        const bookId = btn.id.substr(4)
-        const domBookCard = document.querySelector(`#${bookId}`)
-
-        removeFromLibrary(bookId);
-        localLibrary = localLibrary.filter(book => book.bookId != bookId);
-
-        localStorage.setItem('localLibrary', JSON.stringify(localLibrary))
-
-        domBookCard.remove();
-    })
-});
+for (let i=0; i < localStorage.length; i++) {
+    JSON.parse(localStorage.getItem(localStorage.key(i)));
+}
 
 
 form.addEventListener("submit", (e) => {
+    // The Event interface's preventDefault() method 
+    // tells the user agent that if the event does not get explicitly
+    // handled, its default action should not be taken as it normally would be.
     e.preventDefault();
 
-    let book = new Book(
-        bookTitle.value,
-        bookAuthor.value,
-        bookPages.value,
-        bookRead.checked);
+    storeButtonFunction();
 
-    book.addBookToLibrary();
-    form.reset();
-    formAddBook.style.display = "none";
-
-
-    const bookCard = book.makeCard();
-    bookRow.innerHTML += bookCard;
-
-    let btnRemove = document.querySelectorAll(".btn-remove")
-
-    btnRemove.forEach(btn => {
-        btn.addEventListener("click", function() {
-            const bookId = btn.id.substr(4)
-            const domBookCard = document.querySelector(`#${bookId}`)
-
-            removeFromLibrary(bookId);
-            domBookCard.remove();
-        })
-    });
-
-    localStorage.setItem('localLibrary', JSON.stringify(sessionLibrary));
-    // localStorage.setItem('numInstances', numInstances)
 });
 
-console.log("hello from the outside")
+
+function bookCardTemplate(title, author, publish, page) {
+    return `<div class="book-card">
+            <p >Title: ${title}</p>
+            <p>Author: ${author}</p>
+            <p>Published: ${publish}</p>
+            <p>Pages: ${page}</p>
+            <label for="read"> read
+                <input id="${title}" type="checkbox" name="read" onclick="updateRead(this.id)">
+            </label>
+            </div>`
+}
+
+
+function storeButtonFunction() {
+    // create form data object
+    // interface provides a way to easily construct a set of 
+    // key/value pairs representing form
+    const formData = new FormData(document.querySelector('form'));
+    
+    let values = [] // empty array to stor data value from form input
+
+    // formData.valus() returns iterator for form input values
+    for (const value of formData.values()) {
+        values.push(value); // pushing form values into empty array
+      }
+
+    const book = new Book(...values); // instance of the book
+    
+    // storing the book to local storage
+    // title: {booke details}
+    // using JSON.stringfy to cast return object to string
+    localStorage.setItem(book.title, JSON.stringify(book.bookDetails))
+    
+
+
+    shelv.innerHTML += bookCardTemplate(...values);
+}
+
+
+
+function updateRead(checkId) {
+    const bookName = checkId;
+    // console.log(bookName);
+
+    const book = localStorage.getItem(bookName); 
+    console.log(book);
+
+    book.read = book.read ? true : false;
+}

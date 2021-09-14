@@ -1,83 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100;200;300;500;600;700&display=swap');
-h1 {
-    font-family: 'Antonio', sans-serif;
-    font-weight: 600;
+:root {
+  box-sizing: border-box; /* global box sizing fix */
+
+  --bookCardMargin: 10px;
+}
+
+*,
+::before,
+::after {
+  box-sizing: inherit; /* global box sizing fix */
 }
 
 body {
-    background-color: #f2dac3;
+    /* background-color: #709b90; */
+    font-family: Helvetica, Arial, sans-serif;
 }
 
-.hidden-div {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    width: 100%; /* Full width */
-    /* Full height */
-    height: 100%;
-    left: 0;
-    top: 0;
-    /* Fallback color */
-    background-color: rgb(0, 0, 0);
-    /* Black w/ opacity */
-    background-color: rgba(0, 0, 0, 0.4);
+/* 
+body * + * {
+  margin-top: 1.5em; /* global margins
+} */
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
-.form-addBook {
-    position: relative;
-    margin: auto;
-    padding: 25px;
-    top: 20%;
-    width: 30%;
-    height: 50%;
-    background-color: whitesmoke;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    animation-name: popup;
-    animation-timing-function: ease-in;
-    animation-duration: 0.4s;
+/* flex containter */
+.shelv {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* flex items */
+.book-card {
+  flex-basis: 25%;
 }
 
 
-.div-addBook {
-    position: fixed;
-    left: 87%;
-    top: 90%;
-}
 
-#h1-main {
-    text-align: center;
-}
 
-.input-field,
-#checkbox-read,
-#btn-add {
-    margin-top: 1.5rem !important;
-}
-
-@keyframes popup {
-    from {
-        width: 10%;
-        height: 10%;
-        opacity: 0
-    }
-    to {
-        width: 30%;
-        height: 50%;
-        opacity: 1;
-    }
-}
-
-.btn,
-.btn-large,
-.btn-small {
-    background-color: #cc9b6d !important;
-}
-
-.card {
-    background-color: #f1ca89 !important;
-}
-
-.card-action {
-    background-color: #c8c2bc !important;
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (max-width: 800px) {
+  #shelv {
+    flex-direction: column;
+  }
 }
