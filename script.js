@@ -2,10 +2,10 @@
 const form = document.querySelector('form');
 const shelv = document.querySelector('.shelv')
 
-
+// load books from loacal stroage
 for (let i=0; i < localStorage.length; i++) {
     const book = JSON.parse(localStorage.getItem(localStorage.key(i)));
-    shelv.innerHTML += bookCardTemplate(book.title, book.author, book.publish, book.page)
+    shelv.innerHTML += bookCardTemplate(book.title, book.author, book.publish, book.page, book.read)
 }
 
 // Book calss
@@ -54,14 +54,15 @@ form.addEventListener("submit", (e) => {
 });
 
 
-function bookCardTemplate(title, author, publish, page) {
+function bookCardTemplate(title, author, publish, page, read) {
     return `<div class="book-card">
             <p >Title: ${title}</p>
             <p>Author: ${author}</p>
             <p>Published: ${publish}</p>
             <p>Pages: ${page}</p>
             <label for="read"> read
-                <input id="${title}" type="checkbox" name="read" onclick="updateRead(this.id)">
+                <input id="${title}" type="checkbox" name="read" onclick="updateRead(this.id)" 
+                ${read ? "checked" : ""}>
             </label>
             </div>`
 }
@@ -79,6 +80,8 @@ function storeButtonFunction() {
     for (const value of formData.values()) {
         values.push(value); // pushing form values into empty array
       }
+
+    console.log(values)
 
     const book = new Book(...values); // instance of the book
     
@@ -98,8 +101,14 @@ function updateRead(checkId) {
     const bookName = checkId;
     // console.log(bookName);
 
-    const book = localStorage.getItem(bookName); 
-    console.log(book);
+    const bookDet = JSON.parse(localStorage.getItem(bookName)); 
 
-    book.read = book.read ? true : false;
+    const book = new Book(bookDet.title, bookDet.author, bookDet.publish, bookDet.page, bookDet.read)
+
+    book.read = !book.read ? true : false;
+    console.log(book.bookDetails);
+    
+
+    localStorage.setItem(book.title, JSON.stringify(book.bookDetails))
+
 }
